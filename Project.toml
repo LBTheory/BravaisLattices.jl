@@ -1,6 +1,6 @@
 authors = ["C. Naaktgeboren <NaaktgeborenC.PhD@gmail.com>"]
 name = "BravaisLattices"
 uuid = "6a0dcac4-263d-11e9-219b-2bfcac5c9afc"
-version = "0.1.0"
+version = "0.0.0"
 
 [deps]
