@@ -1,6 +1,4 @@
-authors = ["C. Naaktgeboren <NaaktgeborenC.PhD@gmail.com>"]
 name = "BravaisLattices"
 uuid = "6a0dcac4-263d-11e9-219b-2bfcac5c9afc"
+authors = ["C. Naaktgeboren <NaaktgeborenC.PhD@gmail.com>"]
 version = "0.0.0"
-
-[deps]
