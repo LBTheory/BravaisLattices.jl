@@ -42,8 +42,10 @@ import SymEngine
 #------------------------------------------------------------------------------#
 
 
-# Lattice Amount type
-# -------------------
+#··············································································#
+#                             Lattice Amount type                              #
+#··············································································#
+
 # Being based on `Real`, allows for JuliaIntervals Interval types  to  compose
 # lattice amounts, since the `abstract type AbstractInterval{T} <: Real` (from
 # line      14      of      src/intervals/intervals.jl       from       commit
@@ -51,8 +53,10 @@ import SymEngine
 latAmt = Union{Real,SymEngine.Basic}
 
 
-# Lattice Coordinate type (parametric, valued), with inner constructor:
-# ---------------------------------------------------------------------
+#··············································································#
+#                 Lattice Coordinate type (parametric, valued)                 #
+#··············································································#
+
 struct latCoord{D,T<:latAmt}
     vec::Tuple{Vararg{T,D}}
     # Constructors
@@ -68,17 +72,7 @@ struct latCoord{D,T<:latAmt}
     end
 end
 
-# Outer Constructors:
-# -------------------
-
 function latCoord(A::Tuple{Vararg{<:latAmt}})
-    if length(A) == 0
-        throw(ErrorException("no arguments!"))
-    end
-    return latCoord(length(A), A)
-end
-
-function latCoord(A::Tuple{Vararg{<:latAmt}}...)
     if length(A) == 0
         throw(ErrorException("no arguments!"))
     end
@@ -91,18 +85,28 @@ function latCoord(A::Array{<:latAmt})
 end
 
 
+#··············································································#
+#                        Lattice velocity weights type                         #
+#··············································································#
 
-# Lattice velocity weights
 struct latVW{D,T<:latAmt}
     v::latCoord{D,T}
     i::UInt64
     j::UInt64
 end
 
-# Lattice Name type
+
+#··············································································#
+#                              Lattice Name type                               #
+#··············································································#
+
 latID = NamedTuple{(:byVel, :byNrg),Tuple{String,String}}
 
-# Lattice type
+
+#··············································································#
+#                                 Lattice type                                 #
+#··············································································#
+
 struct lattice{D,T<:latAmt}     # D: Euclidean dimension, T: discrete amount type
     ID::latID                   # lattice ID
     a::latAmt                   # lattice scaling factor
