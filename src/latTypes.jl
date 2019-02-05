@@ -49,9 +49,18 @@ import SymEngine
 # 74d271ea9b92ce7f0c0e21d785f12c32c48148a1).
 latAmt = Union{Real,SymEngine.Basic}
 
-# Lattice Coordinate type
+# Lattice Coordinate type (parametric, valued)
 struct latCoord{D,T<:latAmt}
     vec::Tuple{Vararg{T,D}}
+    # Constructors
+    function latCoord(d::Integer, data::Tuple{<:latAmt})
+        if d <= 0
+            throw(DomainError("d = $d ⩽ 0."))
+        elseif d > length(data)
+            throw(DomainError("d = $d > (data length)."))
+        end
+        return new{d,typeof(promote(t[1:d]...)[1])}(Tuple(data[1:d]...))
+    end
 end
 
 # Lattice velocity weights
