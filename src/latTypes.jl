@@ -53,13 +53,15 @@ latAmt = Union{Real,SymEngine.Basic}
 struct latCoord{D,T<:latAmt}
     vec::Tuple{Vararg{T,D}}
     # Constructors
-    function latCoord(d::Integer, data::Tuple{<:latAmt})
+    function latCoord(d::Integer, data::Tuple{Vararg{<:latAmt}})
         if d <= 0
             throw(DomainError("d = $d ⩽ 0."))
         elseif d > length(data)
             throw(DomainError("d = $d > (data length)."))
         end
-        return new{d,typeof(promote(t[1:d]...)[1])}(Tuple(data[1:d]...))
+        pdat = promote(data[1:d]...)
+        TYPE = typeof(pdat[1])
+        return new{d,TYPE}(pdat)
     end
 end
 
