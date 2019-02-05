@@ -41,6 +41,7 @@ import SymEngine
 #                                 Definitions                                  #
 #------------------------------------------------------------------------------#
 
+
 # Lattice Amount type
 # -------------------
 # Being based on `Real`, allows for JuliaIntervals Interval types  to  compose
@@ -49,7 +50,9 @@ import SymEngine
 # 74d271ea9b92ce7f0c0e21d785f12c32c48148a1).
 latAmt = Union{Real,SymEngine.Basic}
 
-# Lattice Coordinate type (parametric, valued)
+
+# Lattice Coordinate type (parametric, valued), with inner constructor:
+# ---------------------------------------------------------------------
 struct latCoord{D,T<:latAmt}
     vec::Tuple{Vararg{T,D}}
     # Constructors
@@ -64,6 +67,30 @@ struct latCoord{D,T<:latAmt}
         return new{d,TYPE}(pdat)
     end
 end
+
+# Outer Constructors:
+# -------------------
+
+function latCoord(A::Tuple{Vararg{<:latAmt}})
+    if length(A) == 0
+        throw(ErrorException("no arguments!"))
+    end
+    return latCoord(length(A), A)
+end
+
+function latCoord(A::Tuple{Vararg{<:latAmt}}...)
+    if length(A) == 0
+        throw(ErrorException("no arguments!"))
+    end
+    return latCoord(length(A), A)
+end
+
+function latCoord(A::Array{<:latAmt})
+    data = Tuple(vec(A))
+    return latCoord(length(data), data)
+end
+
+
 
 # Lattice velocity weights
 struct latVW{D,T<:latAmt}
