@@ -42,6 +42,11 @@ import SymEngine
 #------------------------------------------------------------------------------#
 
 # Lattice Amount type
+# -------------------
+# Being based on `Real`, allows for JuliaIntervals Interval types  to  compose
+# lattice amounts, since the `abstract type AbstractInterval{T} <: Real` (from
+# line      14      of      src/intervals/intervals.jl       from       commit
+# 74d271ea9b92ce7f0c0e21d785f12c32c48148a1).
 latAmt = Union{Real,SymEngine.Basic}
 
 # Lattice Coordinate type
