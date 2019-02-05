@@ -35,6 +35,7 @@ import SymEngine
 #------------------------------------------------------------------------------#
 
 # NOTE: This module is @reexport'ed by the main package module
+export latAmt, latCoord, latVW, latID, lattice
 
 
 #------------------------------------------------------------------------------#
@@ -68,22 +69,32 @@ struct latCoord{D,T<:latAmt}
         end
         pdat = promote(data[1:d]...)
         TYPE = typeof(pdat[1])
-        return new{d,TYPE}(pdat)
+        new{d,TYPE}(pdat)
     end
 end
 
 function latCoord(A::Tuple{Vararg{<:latAmt}})
     if length(A) == 0
-        throw(ErrorException("no arguments!"))
+        throw(ErrorException("empty collection!"))
     end
-    return latCoord(length(A), A)
+    latCoord(length(A), A)
 end
 
 function latCoord(A::Array{<:latAmt})
-    data = Tuple(vec(A))
-    return latCoord(length(data), data)
+    latCoord(Tuple(vec(A)))
 end
 
+function latCoord(A::T where T<:latAmt)
+    latCoord(1, (A,))
+end
+
+function latCoord(A::T where T<:latAmt, B::T where T<:latAmt)
+    latCoord(2, (A, B))
+end
+
+function latCoord(A::T where T<:latAmt, B::T where T<:latAmt, C::T where T<:latAmt)
+    latCoord(3, (A, B, C))
+end
 
 #··············································································#
 #                        Lattice velocity weights type                         #
