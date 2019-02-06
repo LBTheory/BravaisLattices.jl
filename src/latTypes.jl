@@ -84,17 +84,7 @@ function latCoord(A::Array{<:latAmt})
     latCoord(Tuple(vec(A)))
 end
 
-function latCoord(A::T where T<:latAmt)
-    latCoord(1, (A,))
-end
-
-function latCoord(A::T where T<:latAmt, B::T where T<:latAmt)
-    latCoord(2, (A, B))
-end
-
-function latCoord(A::T where T<:latAmt, B::T where T<:latAmt, C::T where T<:latAmt)
-    latCoord(3, (A, B, C))
-end
+latCoord(A::T...) where T<:latAmt = latCoord(A)
 
 
 #··············································································#
