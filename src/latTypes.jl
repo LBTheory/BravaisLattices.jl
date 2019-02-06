@@ -62,8 +62,8 @@ struct latCoord{D,T<:latAmt}
     vec::Tuple{Vararg{T,D}}
     # Constructors
     function latCoord(d::Integer, data::Tuple{Vararg{<:latAmt}})
-        if d <= 0
-            throw(DomainError("d = $d ⩽ 0."))
+        if d <= 0 || d >= 4
+            throw(DomainError("d = $d outside the [1, 3] interval"))
         elseif d > length(data)
             throw(DomainError("d = $d > (data length)."))
         end
@@ -95,6 +95,7 @@ end
 function latCoord(A::T where T<:latAmt, B::T where T<:latAmt, C::T where T<:latAmt)
     latCoord(3, (A, B, C))
 end
+
 
 #··············································································#
 #                        Lattice velocity weights type                         #
